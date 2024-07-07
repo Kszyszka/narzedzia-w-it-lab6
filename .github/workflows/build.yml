@@ -1,0 +1,34 @@
+# Workflow polegający na instalacji Pythona, jego zależności oraz utworzenia pliku .exe za pomocą pyinstaller.
+
+name: Python - Build with PyInstaller
+
+on:
+  push:
+    # Automatycznie po pushowaniu na mastera (maina)
+    branches: [ "main" ]
+  pull_request:
+    # Uzupełnienie do pusha, jako że głównie działam na pull requestach
+    branches: [ "main" ]
+  schedule:
+    # Automatycznie raz w tygodniu (dzień i godzina dowolna) - wybrany każdy Piątek o 04:20
+    - cron:  '20 4 * * 5'
+  label:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    # Ustawienie domyślnego serwera Windows (najnowszy dostępny) - aktualnie jest to 2022
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Build using powershell # W środku zawarte są już instrukcje o pyinstaller
+      run: |
+        .\buildme.ps1
