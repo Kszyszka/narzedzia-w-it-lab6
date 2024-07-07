@@ -42,7 +42,7 @@ jobs:
         overwrite: true
     - name: Struktura plików dla .exe
       run: |
-        mkdir artefacts
+        mkdir -Force artefacts
         Move-Item .\dist\main.exe .\artefacts\main.exe
         git add .\artefacts\main.exe
     - name: Scommituj artefakt bezpośrednio do repozytorium
