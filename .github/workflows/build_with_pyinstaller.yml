@@ -40,3 +40,17 @@ jobs:
         path: .\dist\main.exe
         if-no-files-found: warn
         overwrite: true
+    - name: Struktura plików dla .exe
+      run: |
+        mkdir artefacts
+        Move-Item .\dist\main.exe .\artefacts\main.exe
+        git add .\artefacts\main.exe
+    - name: Scommituj artefakt bezpośrednio do repozytorium
+      uses: stefanzweifel/git-auto-commit-action@v5.0.1
+      with:
+        commit_message: Automatyczne dodanie nowej wersji pliku .exe
+        branch: main
+        commit_options: '--no-verify --signoff'
+        commit_author: Author <actions@github.com>
+        status_options: '--untracked-files=no'
+        skip_dirty_check: true
