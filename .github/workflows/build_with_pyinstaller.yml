@@ -32,3 +32,11 @@ jobs:
     - name: Build using powershell # W środku zawarte są już instrukcje o pyinstaller
       run: |
         .\buildme.ps1
+    # Wykorzystanie action/upload-artifact@v3 (v3 jest wktórce deprecjonowane, użyłem v4) do przesłania utworzonego pliku .exe na repozytorium github
+    - name: Dodaj utworzony plik .exe do repozytorium
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: Executable
+        path: .\dist\main.exe
+        if-no-files-found: warn
+        overwrite: true
