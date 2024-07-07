@@ -2,8 +2,10 @@
 import argparse
 import dicttoxml
 import xmltodict
+from xml.parsers.expat import ExpatError
 import json
 import yaml
+import yaml.scanner
 
 def arguments():
     """Funkcja obsługująca parsowanie argumentów przy uruchomieniu programu."""
@@ -27,21 +29,31 @@ def arguments():
 
 def parse_data(source_file):
     """Funkcja do odczytywania danych z plików i konwersji do słownika."""
-    if source_file.name[-4:] == 'json':
-        content_dict = json.loads(source_file.read())
-    elif source_file.name[-3:] == 'xml':
-        content_dict = xmltodict.parse(source_file.read())
-    elif source_file.name[-3:] == 'yml':
-        content_dict = yaml.load(source_file.read(), Loader=yaml.SafeLoader)[0]
-    else:
-        print("Nieobsługiwany format pliku źródłowego.")
+    try:
+        if source_file.name[-4:] == 'json':
+            content_dict = json.loads(source_file.read())
+        elif source_file.name[-3:] == 'xml':
+            content_dict = xmltodict.parse(source_file.read())
+        elif source_file.name[-3:] == 'yml':
+            content_dict = yaml.load(source_file.read(), Loader=yaml.SafeLoader)[0]
+        else:
+            print("Nieobsługiwany format pliku źródłowego.")
+            return 0
+    except json.JSONDecodeError:
+        print("Plik źródłowy .json posiada niepoprawną składnię pliku.")
+        return 0
+    except ExpatError:
+        print("Plik źródłowy .xml posiada niepoprawną składnię pliku.")
+        return 0
+    except yaml.scanner.ScannerError:
+        print("Plik źródłowy .yml posiada niepoprawną składnię pliku.")
         return 0
     return content_dict
 
 def main():
     """Główna funkcja programu."""
     argumenty = arguments()
-    parse_data(argumenty.source_file)
+    print(parse_data(argumenty.source_file))
     return 0
 
 if __name__ == "__main__":
