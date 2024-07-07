@@ -1,11 +1,11 @@
 """Program do konwersji danych w formatach .xml, .json, .yml."""
 import argparse
-import dicttoxml
-import xmltodict
-from xml.parsers.expat import ExpatError
 import json
+from xml.parsers.expat import ExpatError
+from xml.dom.minidom import parseString
+from dicttoxml import dicttoxml
+import xmltodict
 import yaml
-import yaml.scanner
 
 def arguments():
     """Funkcja obsługująca parsowanie argumentów przy uruchomieniu programu."""
@@ -50,10 +50,25 @@ def parse_data(source_file):
         return 0
     return content_dict
 
+def dump_data(destination_file, content_dict):
+    """Funkcja do zapisywania danych ze słownika do pliku źródłowego (json, xml, yml)."""
+    if destination_file.name[-4:] == 'json':
+        destination_file.write(json.dumps(content_dict, indent=4))
+    elif destination_file.name[-3:] == 'xml':
+        parsed_content = parseString(dicttoxml(content_dict, return_bytes=False)).toprettyxml()
+        destination_file.write(parsed_content)
+    elif destination_file.name[-3:] == 'yml':
+        destination_file.write(yaml.dump(content_dict, allow_unicode=True))
+    else:
+        print("Nieobsługiwany format pliku źródłowego.")
+        return 0
+    return 0
+
 def main():
     """Główna funkcja programu."""
     argumenty = arguments()
-    print(parse_data(argumenty.source_file))
+    zawartosc = parse_data(argumenty.source_file)
+    dump_data(argumenty.destination_file, zawartosc)
     return 0
 
 if __name__ == "__main__":
