@@ -1,6 +1,7 @@
 argparse
 dicttoxml
 xmltodict
+pyyaml # Wymagane do pyinstaller, wbudowany yaml tworzy problemy z .exe
 # xml - paczka dostępna domyślnie
 # json - paczka dostępna domyślnie
 # yaml - paczka dostępna domyślnie
