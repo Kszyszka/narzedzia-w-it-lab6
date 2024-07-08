@@ -21,10 +21,13 @@ def arguments():
         parser.add_argument('destination_file',
                             metavar='destination_file',
                             type=argparse.FileType('w', encoding='UTF-8'))
+        argumenty = parser.parse_args()
     except FileNotFoundError:
         print("Plik źródłowy nie istnieje.")
-
-    argumenty = parser.parse_args()
+        return 0
+    except PermissionError:
+        print("Brak wymaganych uprawnień do obsługi wskazanych plików.")
+        return 0
     return argumenty
 
 def parse_data(source_file):
@@ -62,14 +65,22 @@ def dump_data(destination_file, content_dict):
     else:
         print("Nieobsługiwany format pliku źródłowego.")
         return 0
-    return 0
+    return 1
 
 def main():
     """Główna funkcja programu."""
     argumenty = arguments()
-    zawartosc = parse_data(argumenty.source_file)
-    dump_data(argumenty.destination_file, zawartosc)
-    return 0
+    if argumenty:
+        zawartosc = parse_data(argumenty.source_file)
+        if zawartosc:
+            dump_data(argumenty.destination_file, zawartosc)
+        else:
+            print("Wystąpił problem ze składnią pliku źródłowego, wstrzymywanie programu.")
+            return 0
+    else:
+        print("Wystąpił problem z plikiem źródłowym, wstrzymywanie programu.")
+        return 0
+    return 1
 
 if __name__ == "__main__":
     main()
