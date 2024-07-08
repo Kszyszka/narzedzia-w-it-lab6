@@ -21,14 +21,13 @@ def arguments():
         parser.add_argument('destination_file',
                             metavar='destination_file',
                             type=argparse.FileType('w', encoding='UTF-8'))
+        argumenty = parser.parse_args()
     except FileNotFoundError:
         print("Plik źródłowy nie istnieje.")
         return 0
     except PermissionError:
         print("Brak wymaganych uprawnień do obsługi wskazanych plików.")
         return 0
-
-    argumenty = parser.parse_args()
     return argumenty
 
 def parse_data(source_file):
