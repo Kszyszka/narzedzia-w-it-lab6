@@ -24,6 +24,9 @@ def arguments():
     except FileNotFoundError:
         print("Plik źródłowy nie istnieje.")
         return 0
+    except PermissionError:
+        print("Brak wymaganych uprawnień do obsługi wskazanych plików.")
+        return 0
 
     argumenty = parser.parse_args()
     return argumenty
@@ -63,7 +66,7 @@ def dump_data(destination_file, content_dict):
     else:
         print("Nieobsługiwany format pliku źródłowego.")
         return 0
-    return 0
+    return 1
 
 def main():
     """Główna funkcja programu."""
