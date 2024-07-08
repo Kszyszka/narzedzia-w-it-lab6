@@ -12,6 +12,11 @@ Należy pobrać automatycznie zbuildowany plik .exe, który dostępny jest z poz
 - Release (https://github.com/Kszyszka/narzedzia-w-it-lab6/releases)
 #### Plik może być rozpoznawany jako wirus przez Windows Update, można dodać go do wyjątku, lub postąpić z własnoręczym buildem wskazanym poniżej.
 
+#### Uruchomienie:
+```
+.\konwerter.exe [-h] source_file destination_file
+```
+
 ### .py (Manualny build)
 1. Sklonowanie repozytorium lub pobranie
     ```
@@ -29,3 +34,9 @@ Należy pobrać automatycznie zbuildowany plik .exe, który dostępny jest z poz
     cd artefacts
     .\konwerter.exe [-h] source_file destination_file
     ```
+3. Wynik
+
+    Wynikiem uruchomienia .\konwerter.exe lub konwerter.py będzie przekonwertowany plik o docelowym rozszerzeniu. W przypadku niepoprawnego użycia lub napotkania błędu, program automatycznie się zatrzyma.
+
+## Copyright
+### Made by Krzysztof Hager 52687 'Kszyszka' @ DSW 2024.
