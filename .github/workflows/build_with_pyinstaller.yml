@@ -37,15 +37,15 @@ jobs:
       uses: actions/upload-artifact@v4.3.4
       with:
         name: Executable
-        path: .\dist\main.exe
+        path: .\dist\konwerter.exe
         if-no-files-found: warn
         overwrite: true
     - name: Struktura plików dla .exe
       run: |
         mkdir -Force artefacts
-        Remove-Item -Force .\artefacts\main.exe
-        Move-Item .\dist\main.exe .\artefacts\main.exe
-        git add .\artefacts\main.exe
+        Remove-Item -Force .\artefacts\konwerter.exe
+        Move-Item .\dist\konwerter.exe .\artefacts\konwerter.exe
+        git add .\artefacts\konwerter.exe
     - name: Scommituj artefakt bezpośrednio do repozytorium
       uses: stefanzweifel/git-auto-commit-action@v5.0.1
       with:

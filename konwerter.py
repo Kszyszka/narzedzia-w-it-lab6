@@ -10,7 +10,7 @@ import yaml
 def arguments():
     """Funkcja obsługująca parsowanie argumentów przy uruchomieniu programu."""
     parser = argparse.ArgumentParser(
-        prog="main.py",
+        prog="konwerter.py | konwerter.exe",
         description="Program do konwersji plików .xml, .json, .yml.",
         epilog="Made by Krzysztof Hager 52687 'Kszyszka' @ DSW."
     )
