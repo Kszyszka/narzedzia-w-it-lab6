@@ -23,6 +23,7 @@ def arguments():
                             type=argparse.FileType('w', encoding='UTF-8'))
     except FileNotFoundError:
         print("Plik źródłowy nie istnieje.")
+        return 0
 
     argumenty = parser.parse_args()
     return argumenty
